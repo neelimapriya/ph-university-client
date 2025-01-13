@@ -6,19 +6,34 @@ import CreateStudent from "../pages/admin/CreateStudent";
 export const AdminRoutes=[
       
     {
+      name:"Dashboard",
       path: "dashboard",
       element: <AdminDashboard></AdminDashboard>,
     },
     {
-      path: "create-faculty",
-      element: <CreateFaculty></CreateFaculty>,
+      name: 'User Management',
+      children: [
+        {
+          name: 'Create Admin',
+          path: 'create-admin',
+          element: <CreateAdmin />,
+        },
+        {
+          name: 'Create Faculty',
+          path: 'create-faculty',
+          element: <CreateFaculty />,
+        },
+        {
+          name: 'Create Student',
+          path: 'create-student',
+          element: <CreateStudent />,
+        },
+        {
+          name: 'Create Member',
+          path: 'create-member',
+          element: <CreateStudent />,
+        },
+      ],
     },
-    {
-      path: "create-student",
-      element: <CreateStudent></CreateStudent>,
-    },
-    {
-      path: "create-admin",
-      element: <CreateAdmin></CreateAdmin>,
-    },
+    
   ]

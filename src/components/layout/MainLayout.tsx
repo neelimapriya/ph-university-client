@@ -1,39 +1,11 @@
-import { Button, Layout, Menu, MenuProps } from "antd";
+import { Button, Layout, Menu } from "antd";
 import { useState } from "react";
-import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-} from "@ant-design/icons";
-import { NavLink, Outlet } from "react-router-dom";
-const { Header, Sider, Content } = Layout;
-const items: MenuProps["items"] = [
-  {
-    key: "Dashboard",
-
-    label:<NavLink to={"/admin/dashboard"}>Dashboard</NavLink> ,
-  },
-  {
-    key: "User management",
-
-    label: "User management",
-    children:[
-      {
-        key:"Create admin",
-        label:<NavLink to={"/admin/create-admin"}>Create admin</NavLink>
-      },
-      {
-        key:"Create faculty",
-        label:<NavLink to={"/admin/create-faculty"}>Create faculty</NavLink>
-      },
-      {
-        key:"Create student",
-        label:<NavLink to={"/admin/create-student"}>Create student</NavLink>
-      },
-    ]
-  
-  },
- 
-];
+import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Outlet } from "react-router-dom";
+import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerators";
+import { AdminRoutes } from "../../routes/admin.routes";
+import { Sidebar } from "./sidebar";
+const { Header, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -41,18 +13,7 @@ const MainLayout = () => {
   return (
     <div>
       <Layout style={{ height: "100vh" }}>
-        <Sider trigger={null} collapsible collapsed={collapsed}>
-          <div />
-          <div style={{color:'white', height:'4rem', display:'flex', justifyContent:'center', alignItems:'center'}}>
-            <h1>PH University</h1>
-          </div>
-          <Menu
-            theme="dark"
-            mode="inline"
-            defaultSelectedKeys={["4"]}
-            items={items}
-          />
-        </Sider>
+      <Sidebar/>
         <Layout>
           <Header style={{ padding: 0 }}>
             <Button
@@ -72,7 +33,7 @@ const MainLayout = () => {
               padding: 24,
             }}
           >
-           <Outlet></Outlet>
+            <Outlet></Outlet>
           </Content>
         </Layout>
       </Layout>
