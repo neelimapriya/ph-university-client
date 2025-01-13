@@ -49,7 +49,7 @@ const MainLayout = () => {
           <Menu
             theme="dark"
             mode="inline"
-            defaultSelectedKeys={["1"]}
+            defaultSelectedKeys={["4"]}
             items={items}
           />
         </Sider>

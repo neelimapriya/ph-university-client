@@ -5,7 +5,8 @@ import Login from "../pages/Login";
 import Contact from "../pages/Contact";
 import Register from "../pages/Register";
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import { AdminRoutes } from "./adminRoutes";
+import { AdminRoutes } from "./admin.routes";
+
 
 const router = createBrowserRouter([
   {
