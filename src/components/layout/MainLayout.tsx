@@ -1,31 +1,25 @@
-import { Button, Layout, Menu } from "antd";
-import { useState } from "react";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
+import { Button, Layout,  } from "antd";
+
 import { Outlet } from "react-router-dom";
-import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerators";
-import { AdminRoutes } from "../../routes/admin.routes";
+
 import { Sidebar } from "./sidebar";
+import { useAppDispatch } from "../../redux/hook";
+import { logout } from "../../redux/features/auth/authSlice";
 const { Header, Content } = Layout;
 
 const MainLayout = () => {
-  const [collapsed, setCollapsed] = useState(false);
+  const dispatch=useAppDispatch()
+  const handleLogout=()=>{
+    dispatch(logout())
+  }
 
   return (
     <div>
       <Layout style={{ height: "100vh" }}>
       <Sidebar/>
         <Layout>
-          <Header style={{ padding: 0 }}>
-            <Button
-              type="text"
-              icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-              onClick={() => setCollapsed(!collapsed)}
-              style={{
-                fontSize: "16px",
-                width: 64,
-                height: 64,
-              }}
-            />
+          <Header style={{ }}>
+            <Button onClick={handleLogout}>Logout</Button>
           </Header>
           <Content
             style={{
