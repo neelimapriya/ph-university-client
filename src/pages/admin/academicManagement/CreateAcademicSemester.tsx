@@ -21,6 +21,7 @@ const CreateAcademicSemester = () => {
   const [addAcademicSemester] = useAddAcademicSemesterMutation();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data,'data');
    const toastId= toast.loading("Creating...")
     const name = semesterOptions[Number(data?.name) - 1]?.label;
     console.log(name);
@@ -35,7 +36,7 @@ const CreateAcademicSemester = () => {
 console.log(semesterData);
     try {
       
-      const res = (await addAcademicSemester(semesterData)) as TResponse;
+      const res = (await addAcademicSemester(semesterData)) as TResponse <typeof data>;
       console.log(res);
       if(res.error){
         toast.error(res?.error?.data?.message, {id:toastId})
