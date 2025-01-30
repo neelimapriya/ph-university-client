@@ -1,21 +1,38 @@
-import { Button, Table, Tag } from "antd";
+import { Button, Dropdown, Table, Tag } from "antd";
 import { useState } from "react";
 import type { TableColumnsType } from "antd";
 import { TAcademicSemester } from "../../../types/academicManagement.type";
 import { TQueryParam, TSemester } from "../../../types";
-import { useGetAllRegisteredSemesterQuery } from "../../../redux/features/admin/courseManagement.api";
+import {
+  useGetAllRegisteredSemesterQuery,
+  useUpdateRegisteredSemesterMutation,
+} from "../../../redux/features/admin/courseManagement.api";
 import moment from "moment";
 
 export type TTableData = Pick<
   TSemester,
   "academicSemester" | "status" | "startDate" | "endDate"
 >;
-const RegisteredSemester = () => {
-  const [params, setParams] = useState<TQueryParam[] | undefined>(undefined);
 
+const items = [
+  {
+    label: "Upcoming",
+    key: "UPCOMING",
+  },
+  {
+    label: "Ongoing",
+    key: "ONGOING",
+  },
+  {
+    label: "Ended",
+    key: "ENDED",
+  },
+];
+const RegisteredSemester = () => {
+  const [semesterId, setSemesterId] = useState("");
   const { data: semesterData, isFetching } =
     useGetAllRegisteredSemesterQuery(undefined);
-
+  const [updateSemesterStatus] = useUpdateRegisteredSemesterMutation();
   const tableData = semesterData?.data?.map(
     ({ _id, academicSemester, startDate, endDate, status }) => ({
       key: _id,
@@ -25,6 +42,21 @@ const RegisteredSemester = () => {
       status,
     })
   );
+
+  const handleStatusUpdate = (data) => {
+    // console.log(semesterId, data.key);
+    const updateData = {
+      id: semesterId,
+      data: {
+        status: data.key,
+      },
+    };
+    updateSemesterStatus(updateData);
+  };
+  const menuProps = {
+    items,
+    onClick: handleStatusUpdate,
+  };
 
   const columns: TableColumnsType<TTableData> = [
     {
@@ -40,11 +72,11 @@ const RegisteredSemester = () => {
         let color;
         if (item === "ONGOING") {
           color = "green";
-        }else if(item === "UPCOMING") {
-            color = "blue";
-          }else{
-            color='red'
-          }
+        } else if (item === "UPCOMING") {
+          color = "blue";
+        } else {
+          color = "red";
+        }
         return <Tag color={color}>{item}</Tag>;
       },
     },
@@ -61,11 +93,11 @@ const RegisteredSemester = () => {
     {
       title: "Action",
       key: "x",
-      render: () => {
+      render: (item) => {
         return (
-          <div>
-            <Button>Update</Button>
-          </div>
+          <Dropdown menu={menuProps} trigger={['click']}>
+            <Button onClick={()=>setSemesterId(item.key)}>Update</Button>
+          </Dropdown>
         );
       },
     },
