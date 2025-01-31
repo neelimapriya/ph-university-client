@@ -25,10 +25,13 @@ const CourseManagementApi = baseApi.injectEndpoints({
       },
       providesTags: ["semester"],
       transformResponse: (response: TResponseRedux<TSemester[]>) => {
+        console.log(response);
         return {
           data: response.data,
           meta: response.meta,
+          
         };
+        
       },
     }),
     addRegisteredSemester: builder.mutation({
@@ -92,7 +95,7 @@ const CourseManagementApi = baseApi.injectEndpoints({
     getCourseFaculties: builder.query({
       query: (id) => {
         return {
-          url: `/courses/${id}/get-faculties`,
+          url: `/courses/${id}/get-faculty`,
           method: "GET",
         };
       },
